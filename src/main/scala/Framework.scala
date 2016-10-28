@@ -126,6 +126,8 @@ object XY {
   val Down      = XY( 0,  1)
   val DownRight = XY( 1,  1)
 
+  val Directions=List(Right,RightUp,Up,UpLeft,Left,LeftDown,Down,DownRight)
+
   def fromDirection45(index: Int): XY = index match {
     case Direction45.Right => Right
     case Direction45.RightUp => RightUp
@@ -187,7 +189,7 @@ case class View(cells: String) {
   def relPosFromIndex(index: Int) = relPosFromAbsPos(absPosFromIndex(index))
   def cellAtRelPos(relPos: XY) = cells.charAt(indexFromRelPos(relPos))
 
-  def offsetToNearest(c: Char) = {
+  def offsetToNearest(c: Char): Option[XY] = {
     val matchingXY = cells.view.zipWithIndex.filter(_._1 == c)
     if( matchingXY.isEmpty )
       None
